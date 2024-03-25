@@ -1,0 +1,31 @@
+---
+interface Props{
+    id: string
+    name: string
+    details: string | ''
+    img: string
+    success: boolean
+}
+
+const { id, name, details, img, success } = Astro.props
+const lauchStatus = success ? "✅" : "❌"
+---
+
+<article class="bg-slate-700 rounded-lg p-3">
+    <a 
+        href=`/launch/${id}`
+        target="_blank"
+    >
+        <picture>
+            <img 
+                src={img} 
+                alt=`Patch for lunch ${id}`
+                class="mx-auto my-3"
+            >
+        </picture>
+        <div class="mx-3 text-white">
+            <h1 class="font-bold uppercase">{name} <span>{lauchStatus}</span></h1>
+            <p>{details}</p>
+        </div>
+    </a>
+</article>

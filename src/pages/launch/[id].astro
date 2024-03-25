@@ -1,0 +1,32 @@
+---
+import { getLaunch } from '../../server/Launches'
+import Layout from '../../layouts/Layout.astro';
+
+export const prerender = false
+
+const { id } = Astro.params
+
+let launch, lauchStatus
+if(!id){
+    Astro.redirect("/")
+}else{
+    launch = await getLaunch({ id })
+    lauchStatus = launch.success ? "✅" : "❌"
+}
+---
+ 
+<Layout title={`Launch ${id}`}>
+    <div class="bg-slate-700 rounded-lg p-3 w-1/2 mx-auto">
+        <img 
+            src={launch.links.patch.small} 
+            alt=`Patch for lunch ${id}`
+            class="mx-auto my-3"
+        >
+        <div class="mx-3 text-white">
+            <a href={launch.links.article} target="_blank">
+                <h1 class="font-bold uppercase">{launch.name} <span>{lauchStatus}</span></h1>
+            </a>
+            <p>{launch.details}</p>
+        </div>
+    </div>
+</Layout>

@@ -1,0 +1,23 @@
+---
+import CardLaunch from "../components/CardLaunch.astro";
+import Layout from '../layouts/Layout.astro';
+import getLaunches from '../server/Launches'
+
+const launches = await getLaunches()
+---
+
+<Layout title="Launches">
+	<div class="grid grid-cols-3 gap-3">
+		{ 
+			launches.map((launch: any) => (
+				<CardLaunch 
+                    id={launch.id}
+                    name={launch.name}
+                    details={launch.details}
+                    img={launch.links.patch.small}
+                    success={launch.success}
+                />
+			))
+		}
+	</div>
+</Layout>
